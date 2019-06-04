@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/sdsog/url-shortener#readme",
   "dependencies": {
+    "ejs": "^2.6.1",
     "express": "^4.17.1"
   }
 }
