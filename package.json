@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/sdsog/url-shortener/issues"
   },
-  "homepage": "https://github.com/sdsog/url-shortener#readme"
+  "homepage": "https://github.com/sdsog/url-shortener#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
