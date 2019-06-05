@@ -14,6 +14,10 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com",
 };
 
+//sets cookie parser
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 //sets body parser
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -22,16 +26,12 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello!");
+// });
 
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
-});
-
-app.get("/hello", (req, res) => {
-  res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
 
 app.get("/urls", (req, res) => {
@@ -39,6 +39,7 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
+//create new tinyURL
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
@@ -67,13 +68,25 @@ app.post("/urls", (req, res) => {
   res.redirect("/urls");       
 });
 
-// EDIT
+//INPUT USER NAME
+app.post('/login', (req, res) => {
+  const userName = req.body.username;
+  console.log(`this is userName ${userName}`);
+  res.cookie("username", userName);
+
+  //console.log(`this is userCookie ${userCookie}`);
+  // console.log(`this is userCookie ${userCookie}`);
+
+  res.redirect("/urls"); 
+});
+
+// EDIT ENTRY
 app.post('/urls/:shortURL', (req, res) => {
     const shortUrlKey = req.params.shortURL;
-    console.log(`this is short url key: ${shortUrlKey}`);
+    // console.log(`this is short url key: ${shortUrlKey}`);
     const newName = req.body.newname;
-    console.log(`this is body.newname` + req.body.newname);
-    console.log(`this is newname: ${newName}`);
+    //console.log(`this is body.newname` + req.body.newname);
+    //console.log(`this is newname: ${newName}`);
     // if (newName) {
         urlDatabase[shortUrlKey] = newName;
     // }
@@ -100,6 +113,8 @@ let generateRandomString = () => {
   return result;
 };
 
+
+// Catch-all redirect
 app.get('*', (request, response) => {
 	response.redirect("urls_index");
 });

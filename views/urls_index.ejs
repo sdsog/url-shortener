@@ -31,7 +31,7 @@
 
     <td><%= urls[key] %></td>
     <td><a href="<%= urls[key] %>" target="_blank"><%= key %></a></td>
-    <td><a href="urls/<%= key %>">EDIT</a></td>
+    <td><a href="<%= key %>">EDIT</a></td>
     <td><form method="POST" action="/urls/<%= key %>/delete">
     	<button type="submit" class="btn btn-primary">DELETE</button>
     </form>
