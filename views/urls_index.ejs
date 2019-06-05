@@ -12,20 +12,23 @@
 
 <body style="font-size:20px; padding:50px;">
 
+<header>
+    <% include ./partials/_header %>
+</header>
+
+<a href ='#'>Create New Tiny Link</a>
 
 <table style="width:100%">
 
-  <tr>
+ <tr>
     <th>KEY</th>
     <th>URL</th> 
-    <th>LINK</th>
   </tr>
 
 <% for(let key in urls) { %>
 <tr>
     <td><%= key %></td>
     <td><%= urls[key] %></td>
-    <td><a href ='#'>deadlink</a></td>
 <% } %>
 </tr>
 
