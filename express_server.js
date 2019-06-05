@@ -14,6 +14,10 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com",
 };
 
+//sets cookie parser
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 //sets body parser
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -22,23 +26,23 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello!");
+// });
 
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
 
-app.get("/hello", (req, res) => {
-  res.send("<html><body>Hello <b>World</b></body></html>\n");
-});
-
 app.get("/urls", (req, res) => {
-  const templateVars = { urls: urlDatabase };
+  const templateVars = {
+  	urls: urlDatabase,
+  	username: req.cookies['username'],
+  };
   res.render("urls_index", templateVars);
 });
 
+//create new tinyURL
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
@@ -46,7 +50,11 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:shortURL", (req, res) => {
   const shortUrlKey = req.params.shortURL;
   const longUrlValue = urlDatabase[shortUrlKey];
-  const templateVars = { shortURL: shortUrlKey , longURL: longUrlValue };
+  const templateVars = {
+  	shortURL: shortUrlKey,
+  	longURL: longUrlValue,
+  	//username: req.cookies["username"],
+ };
   res.render("urls_show", templateVars);
 });
 
@@ -67,13 +75,33 @@ app.post("/urls", (req, res) => {
   res.redirect("/urls");       
 });
 
-// EDIT
+//ADD USER NAME
+app.post('/login', (req, res) => {
+  const username = req.body.username;
+  // console.log(`this is userName ${username}`);
+  res.cookie("username", username);
+  // console.log(`this is userCookie ${userCookie}`);
+  // console.log(`this is userCookie ${userCookie}`);
+  res.redirect("/urls"); 
+});
+
+
+//LOGOUT
+app.post('/logout', (req, res) => {
+  console.log('Im firing');
+  res.clearCookie("username");
+  res.redirect("/urls"); 
+});
+
+
+
+// EDIT ENTRY
 app.post('/urls/:shortURL', (req, res) => {
     const shortUrlKey = req.params.shortURL;
-    console.log(`this is short url key: ${shortUrlKey}`);
+    // console.log(`this is short url key: ${shortUrlKey}`);
     const newName = req.body.newname;
-    console.log(`this is body.newname` + req.body.newname);
-    console.log(`this is newname: ${newName}`);
+    //console.log(`this is body.newname` + req.body.newname);
+    //console.log(`this is newname: ${newName}`);
     // if (newName) {
         urlDatabase[shortUrlKey] = newName;
     // }
@@ -100,6 +128,8 @@ let generateRandomString = () => {
   return result;
 };
 
+
+// Catch-all redirect
 app.get('*', (request, response) => {
 	response.redirect("urls_index");
 });
