@@ -54,16 +54,24 @@ app.get("/u/:shortURL", (req, res) => {
 app.post("/urls", (req, res) => {
   //console.log(req.body);
   const longURL = req.body.longURL;
-
   //generates random string 
   const shortURL = generateRandomString();
   urlDatabase[shortURL] = longURL;
   console.log(`this urldatabase ${JSON.stringify(urlDatabase)}`);
-  //urlDatabase["shortURL"] = longURL;
-  //console.log(`this is longURL ${longURL}`);
-  //console.log(`this is shortURL ${shortURL}`);
   res.send("Ok");        
 });
+
+//***** NEW CODE: 
+app.post("/urls/:shortURL/delete", (req, res) => {
+  const shortUrlKeyDelete = req.params.shortURL;
+  console.log(shortUrlKeyDelete);
+  // const actionPost = `/urls/${shortUrlKeyDelete}/delete`; 
+  // console.log(actionPost);
+  //console.log(shortUrlkey);
+  delete urlDatabase[shortUrlKeyDelete];
+  res.redirect("/urls");
+});
+
 
 
 //Generates random string 
