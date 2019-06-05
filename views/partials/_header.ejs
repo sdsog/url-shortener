@@ -16,6 +16,20 @@
   <h1>TinyURL</h1>
 </header>
 
+
+
+<% if(username){ %>
+<p>username: <%= username %></p>
+
+
+<form class="form-inline" action="/logout" method="POST">
+      <div class="form-group mb-2">
+        <button type="submit" class="btn btn-info">LOGOUT</button>
+      </div>
+</form>
+
+
+<% } else{ %>  
 <form class="form-inline" action="/login" method="POST">
       <div class="form-group mb-2">
         <label for="longURL">Login</label>
@@ -23,6 +37,9 @@
         <button type="submit" class="btn btn-info">Submit</button>
       </div>
 </form>
+<% } %>
+
+
 
 </body>
 </html>

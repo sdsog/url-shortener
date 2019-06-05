@@ -35,7 +35,10 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  const templateVars = { urls: urlDatabase };
+  const templateVars = {
+  	urls: urlDatabase,
+  	username: req.cookies['username'],
+  };
   res.render("urls_index", templateVars);
 });
 
@@ -47,7 +50,11 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:shortURL", (req, res) => {
   const shortUrlKey = req.params.shortURL;
   const longUrlValue = urlDatabase[shortUrlKey];
-  const templateVars = { shortURL: shortUrlKey , longURL: longUrlValue };
+  const templateVars = {
+  	shortURL: shortUrlKey,
+  	longURL: longUrlValue,
+  	//username: req.cookies["username"],
+ };
   res.render("urls_show", templateVars);
 });
 
@@ -68,17 +75,25 @@ app.post("/urls", (req, res) => {
   res.redirect("/urls");       
 });
 
-//INPUT USER NAME
+//ADD USER NAME
 app.post('/login', (req, res) => {
-  const userName = req.body.username;
-  console.log(`this is userName ${userName}`);
-  res.cookie("username", userName);
-
-  //console.log(`this is userCookie ${userCookie}`);
+  const username = req.body.username;
+  // console.log(`this is userName ${username}`);
+  res.cookie("username", username);
   // console.log(`this is userCookie ${userCookie}`);
-
+  // console.log(`this is userCookie ${userCookie}`);
   res.redirect("/urls"); 
 });
+
+
+//LOGOUT
+app.post('/logout', (req, res) => {
+  console.log('Im firing');
+  res.clearCookie("username");
+  res.redirect("/urls"); 
+});
+
+
 
 // EDIT ENTRY
 app.post('/urls/:shortURL', (req, res) => {
