@@ -21,18 +21,18 @@
 <table style="width:100%">
 
  <tr>
-    <th>Website</th>
     <th>TinyURL</th>
+    <th>Website</th>
     <th>Edit Your Link</th>  
   </tr>
 
 <tr>
-    <td><%= longURL %></td>
     <td><a href="<%= longURL %>"><%= shortURL %></a></td>
-
-    <td><form class="form-inline" action="/urls" method="POST">
+    <td><%= longURL %></td>
+ <!--    Form to edit links -->
+    <td><form class="form-inline" action="/urls/<%= shortURL %>" method="POST">
       <div class="form-group mb-2">
-        <input class="form-control" type="text" name="longURL" placeholder="" style="width: 200px; margin-right: 1em">
+        <input class="form-control" type="text" name="newname" placeholder="" style="width: 200px; margin-right: 1em">
         <button type="submit" class="btn btn-primary">EDIT</button>
       </div>
 

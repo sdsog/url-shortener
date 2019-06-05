@@ -2,14 +2,19 @@ const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
 
-app.set("view engine", "ejs");
+// sets request logger
 const morgan = require('morgan');
+app.use(morgan('dev'));
+
+//sets the view engine
+app.set("view engine", "ejs");
 
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com",
 };
 
+//sets body parser
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -58,19 +63,31 @@ app.post("/urls", (req, res) => {
   //generates random string 
   const shortURL = generateRandomString();
   urlDatabase[shortURL] = longURL;
-  console.log(`this urldatabase ${JSON.stringify(urlDatabase)}`);
+  //console.log(`this urldatabase ${JSON.stringify(urlDatabase)}`);
   res.redirect("/urls");       
 });
 
-//***** NEW CODE: 
+// EDIT
+app.post('/urls/:shortURL', (req, res) => {
+    const shortUrlKey = req.params.shortURL;
+    console.log(`this is short url key: ${shortUrlKey}`);
+    const newName = req.body.newname;
+    console.log(`this is body.newname` + req.body.newname);
+    console.log(`this is newname: ${newName}`);
+    // if (newName) {
+        urlDatabase[shortUrlKey] = newName;
+    // }
+    //urlDatabase[shortUrlKey] = newName;
+    res.redirect(`/urls/${shortUrlKey}`);
+});
+
+//DELETE
 app.post("/urls/:shortURL/delete", (req, res) => {
   const shortUrlKeyDelete = req.params.shortURL;
-  console.log(shortUrlKeyDelete);
+  //console.log(shortUrlKeyDelete);
   delete urlDatabase[shortUrlKeyDelete];
   res.redirect("/urls");
 });
-
-
 
 //Generates random string 
 let generateRandomString = () => {
@@ -83,3 +100,6 @@ let generateRandomString = () => {
   return result;
 };
 
+app.get('*', (request, response) => {
+	response.redirect("urls_index");
+});
