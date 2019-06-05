@@ -53,7 +53,7 @@ app.get("/urls/:shortURL", (req, res) => {
   const templateVars = {
   	shortURL: shortUrlKey,
   	longURL: longUrlValue,
-  	//username: req.cookies["username"],
+  	username: req.cookies["username"],
  };
   res.render("urls_show", templateVars);
 });
