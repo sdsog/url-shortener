@@ -53,7 +53,6 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.post("/urls", (req, res) => {
   //console.log(req.body);
-  const enteredURL = {};
   const longURL = req.body.longURL;
 
   //generates random string 
@@ -68,10 +67,10 @@ app.post("/urls", (req, res) => {
 
 
 //Generates random string 
-const generateRandomString = () => {
-  const result           = '';
-  const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const length = characters.length;
+let generateRandomString = () => {
+  let result           = '';
+  let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let length = characters.length;
   for ( var i = 0; i < 6; i++ ) {
     result += characters.charAt(Math.floor(Math.random() * length));
   }
