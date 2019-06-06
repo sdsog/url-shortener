@@ -24,7 +24,32 @@ const users = {
     id: "user2RandomID", 
     email: "user2@example.com", 
     password: "dishwasher-funk"
+  },
+   "test": {
+    id: "test", 
+    email: "test@test.com", 
+    password: "123"
   }
+};
+
+
+
+const setTemplateVars = (userId) => {
+	let templateVars ={};
+  if (users[userId]) {
+  	console.log("here");
+  	templateVars = {
+  		urls: urlDatabase,
+   	 	email: users[userId].email,
+
+    };
+  }else{ 
+  	templateVars = {
+  	  urls: urlDatabase,
+   	  email: null,
+   	}
+  };
+ return templateVars;
 };
 
 //sets cookie parser
@@ -50,31 +75,74 @@ app.get("/urls.json", (req, res) => {
 
 //registration page
 app.get('/register', (req, res) => {
-  const templateVars = {
-  	username: req.cookies["username"],
-  };
-  res.render("urls_login", templateVars);
+
+  const templateVars = setTemplateVars (req.cookies.user_id);
+
+  res.render("urls_register", templateVars);
 });
+
 
 //registration page - add user to registration database
 app.post('/register', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const userId = generateRandomString();
+  res.cookie("user_id", userId);
+  
+
+
   
   if (!email) {
-  	res.send(`error 400 - must enter email <a href ="/">return to home</a>`);
+  	res.sendStatus(400);
+  	console.log("empty email");
   } else if (!password) {
-  	res.send(`error 400 - must enter a password <a href ="/">return to home</a>`);
+  	res.sendStatus(400);
+  	console.log("empty password");
   } else {
 	users[userId] = {};
   	users[userId].id = userId;
   	users[userId].password = password;
   	users[userId].email = email;
-  	res.redirect(`/register`);
+  	res.redirect(`/urls`);
   }
 
-  console.log(users);
+  //console.log(users);
+
+  
+});
+
+
+//THIS IS LOGIN PAGE
+// *******************************************************
+app.get('/login', (req, res) => {
+  
+  res.render("urls_login");
+});
+
+
+//login page - allows users to login
+app.post('/login', (req, res) => {
+  
+  const email = req.body.email;
+  const password = req.body.password;
+
+  console.log("this is email: ", email);
+  console.log("this is password: ", password);
+
+  //testing-purposes
+  
+
+  for (let key in users) {
+	if (users[key].email === email) {
+		console.log("matches");
+		res.cookie("user_id", users[key].id);
+	} else {
+		console.log("email bad");
+  }
+ }
+
+
+ res.render("urls_login");
 
   
 });
@@ -82,23 +150,52 @@ app.post('/register', (req, res) => {
 
 
 
-app.get('/', (request, response) => {
-	response.redirect("urls_index");
+
+app.get('/', (req, res) => {
+	res.redirect("urls_index");
 });
 
+
+
 app.get("/urls", (req, res) => {
-  const templateVars = {
-  	urls: urlDatabase,
-  	username: req.cookies['username'],
-  };
+  
+  const userId = req.cookies.user_id;
+  // const userId = req.cookies[user_id];
+  //console.log(`this is user_id: ${user_id}`);
+  console.log(`this is userId: ${userId}`);
+
+
+
+  //const userEmail = users.userId.email;
+
+  // const user = {}
+  // user = user.userId
+
+  //const email = users[userId].email;
+
+  // console.log(`this is pw:`, email);
+
+
+  // const userIdEmail = users[userId].email;
+  // const userId = req.cookies[user_id];
+  //console.log(`this is user_id: ${user_id}`);
+  // console.log(`this is usersIdEmail:`, userIdEmail);
+
+
+  const templateVars = setTemplateVars (userId);
+
+
+ 
   res.render("urls_index", templateVars);
 });
 
 //create new tinyURL
 app.get("/urls/new", (req, res) => {
-    const templateVars = {
-  	username: req.cookies["username"],
- };
+  const email = users[userId].email;
+
+
+  const templateVars = setTemplateVars (req.cookies.user_id);
+
   res.render("urls_new", templateVars);
 });
 
@@ -132,20 +229,20 @@ app.post("/urls", (req, res) => {
 });
 
 //ADD USER NAME
-app.post('/login', (req, res) => {
-  const username = req.body.username;
-  // console.log(`this is userName ${username}`);
-  res.cookie("username", username);
-  // console.log(`this is userCookie ${userCookie}`);
-  // console.log(`this is userCookie ${userCookie}`);
-  res.redirect("/urls"); 
-});
+// app.post('/login', (req, res) => {
+//   const username = req.body.username;
+//   // console.log(`this is userName ${username}`);
+//   res.cookie("username", username);
+//   // console.log(`this is userCookie ${userCookie}`);
+//   // console.log(`this is userCookie ${userCookie}`);
+//   res.redirect("/urls"); 
+// });
 
 
 //LOGOUT
 app.post('/logout', (req, res) => {
   console.log('Im firing');
-  res.clearCookie("username");
+  res.clearCookie("user_id");
   res.redirect("/urls"); 
 });
 

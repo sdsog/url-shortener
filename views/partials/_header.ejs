@@ -36,22 +36,22 @@
 
 	<div class="col-md-6">
 
-		<% if(username){ %>
+		<% if(email){ %>
 
-			<form class="form-inline" action="/logout" method="POST" style="float:right; margin-right:160px; margin-top:-25px;">
-      			<div class="form-group mb-2">
-        		<label for="LOGOUT"><p class="lead" style="margin-top:12px; font-size:16px">Welcome back, <strong><%= username %></strong></p></label>
-        	<button type="submit" class="btn btn-warning btn-sm" style="margin: 1em">LOGOUT</button>
+			<p class="lead" style="margin-top:12px; font-size:16px">LOGGED IN <strong><%= email %></strong></p>
     </div>
 
 
 	<% } else{ %>  
+
+<!-- 		<p><a href="#">login here</a></p>
+
 		<form class="form-inline" action="/login" method="POST" style="float:right; margin-right:165px; margin-top:-30px;">
       	<div class="form-group mb-2">
         <input class="form-control" type="text" name="username" style="width: 250px; margin: 1em" placeholder="Enter Username">
-        <button type="submit" class="btn btn-warning btn-sm">LOGIN</button>
+        <button type="submit" class="btn btn-warning btn-sm">LOGIN</button> -->
       </div>
-	</form>
+
 <% } %>
 
 </div>
