@@ -14,6 +14,19 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com",
 };
 
+const users = { 
+  "userRandomID": {
+    id: "userRandomID", 
+    email: "user@example.com", 
+    password: "purple-monkey-dinosaur"
+  },
+ "user2RandomID": {
+    id: "user2RandomID", 
+    email: "user2@example.com", 
+    password: "dishwasher-funk"
+  }
+};
+
 //sets cookie parser
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -36,12 +49,37 @@ app.get("/urls.json", (req, res) => {
 
 
 //registration page
-app.get('/register', (request, response) => {
+app.get('/register', (req, res) => {
   const templateVars = {
-  	username: request.cookies["username"],
+  	username: req.cookies["username"],
   };
-  response.render("urls_login", templateVars);
+  res.render("urls_login", templateVars);
 });
+
+//registration page - add user to registration database
+app.post('/register', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const userId = generateRandomString();
+  users[userId] = {};
+  users[userId].id = userId;
+  users[userId].password = password;
+  users[userId].email = email;
+
+  if (!email || !password) {
+  } else {
+
+  }
+    //urlDatabase[shortUrlKey] = newName;
+   
+
+
+
+    res.redirect(`/register`);
+});
+
+
+
 
 app.get('/', (request, response) => {
 	response.redirect("urls_index");
@@ -115,7 +153,7 @@ app.post('/logout', (req, res) => {
 // EDIT ENTRY
 app.post('/urls/:shortURL', (req, res) => {
     const shortUrlKey = req.params.shortURL;
-    console.log(`this is short url key: ${shortUrlKey}`);
+    //console.log(`this is short url key: ${shortUrlKey}`);
     const newName = req.body.newname;
     console.log(`this is body.newname ` + req.body.newname);
     console.log(`this is newname: ${newName}`);
