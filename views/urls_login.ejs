@@ -10,21 +10,31 @@
     <title>New URL - TinyApp Example</title>
   </head>
 
-<body style="padding:50px;">
+<body>
 
 <header>
     <% include ./partials/_header %>
 </header>
 
-    <h3>Create TinyURL</h3>
-    <form class="form-inline" action="/urls" method="POST">
-      <div class="form-group mb-2">
-        <label for="longURL">Enter a URL:</label>
-        <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 400px; margin: 1em">
-        <button type="submit" class="btn btn-primary">Make My TinyURL!</button>
-      </div>
+
+
+    <form class="form" action="/register" method="POST">
+      
+
+        <label for="email">Enter Email</label>
+        <input class="form-control" type="email" name="email" placeholder="enter email" style="width: 400px; margin: 1em">
+
+        <label for="password">Enter Password</label>
+        <input class="form-control" type="password" name="password" placeholder="enter password" style="width: 400px; margin: 1em">
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    
+
     </form>
-  </body>
+
+
+  
+</body>
 
 
 </html>

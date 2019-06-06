@@ -10,36 +10,42 @@
 </head>
 
 
-<body style="font-size:20px; padding:50px;">
+
+
 
 <header>
     <% include ./partials/_header %>
 </header>
 
+<body>
 
-<a href ='urls/new'>Create New TinyUrl</a>
 
-<table style="width:100%">
+<p class="lead" style="margin:12px"><a href ='/urls/new' >Create New TinyUrl</a></p>
+
+<div class="table-responsive">
+	<table class="table table-bordered">
 
  <tr>
-    <th>Your Website</th>
-    <th>TinyURL</th>
+    <th style="border:none"><h5>Your Website</h5></th>
+    <th style="border:none"><h5>TinyURL</h5></th>
   </tr>
 
 <% for(let key in urls) { %>
 <tr>
 
-    <td><%= urls[key] %></td>
-    <td><a href="<%= urls[key] %>" target="_blank"><%= key %></a></td>
-    <td><a href="urls/<%= key %>">EDIT</a></td>
-    <td><form method="POST" action="/urls/<%= key %>/delete">
+    <td style="border:none"><%= urls[key] %></td>
+    <td style="border:none"><a href="<%= urls[key] %>" target="_blank" class="lead"><%= key %></a></td>
+    <td style="border:none"><a href="urls/<%= key %>">EDIT</a></td>
+    <td style="border:none"><form method="POST" action="/urls/<%= key %>/delete">
     	<button type="submit" class="btn btn-primary">DELETE</button>
     </form>
     </td>
 <% } %>
 </tr>
 
-</table>
+ </table>
+
+</div>
 
 
 </body>

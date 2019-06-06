@@ -34,6 +34,19 @@ app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
 
+
+//registration page
+app.get('/register', (request, response) => {
+  const templateVars = {
+  	username: request.cookies["username"],
+  };
+  response.render("urls_login", templateVars);
+});
+
+app.get('/', (request, response) => {
+	response.redirect("urls_index");
+});
+
 app.get("/urls", (req, res) => {
   const templateVars = {
   	urls: urlDatabase,
@@ -44,7 +57,10 @@ app.get("/urls", (req, res) => {
 
 //create new tinyURL
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+    const templateVars = {
+  	username: req.cookies["username"],
+ };
+  res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:shortURL", (req, res) => {
@@ -57,6 +73,7 @@ app.get("/urls/:shortURL", (req, res) => {
  };
   res.render("urls_show", templateVars);
 });
+
 
 app.get("/u/:shortURL", (req, res) => {
   const shortUrlKey = req.params.shortURL;
@@ -98,10 +115,10 @@ app.post('/logout', (req, res) => {
 // EDIT ENTRY
 app.post('/urls/:shortURL', (req, res) => {
     const shortUrlKey = req.params.shortURL;
-    // console.log(`this is short url key: ${shortUrlKey}`);
+    console.log(`this is short url key: ${shortUrlKey}`);
     const newName = req.body.newname;
-    //console.log(`this is body.newname` + req.body.newname);
-    //console.log(`this is newname: ${newName}`);
+    console.log(`this is body.newname ` + req.body.newname);
+    console.log(`this is newname: ${newName}`);
     // if (newName) {
         urlDatabase[shortUrlKey] = newName;
     // }
@@ -129,7 +146,7 @@ let generateRandomString = () => {
 };
 
 
-// Catch-all redirect
-app.get('*', (request, response) => {
-	response.redirect("urls_index");
-});
+// // Catch-all redirect
+// app.get('*', (request, response) => {
+// 	response.redirect("urls_index");
+// });
