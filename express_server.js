@@ -61,21 +61,22 @@ app.post('/register', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const userId = generateRandomString();
-  users[userId] = {};
-  users[userId].id = userId;
-  users[userId].password = password;
-  users[userId].email = email;
-
-  if (!email || !password) {
+  
+  if (!email) {
+  	res.send(`error 400 - must enter email <a href ="/">return to home</a>`);
+  } else if (!password) {
+  	res.send(`error 400 - must enter a password <a href ="/">return to home</a>`);
   } else {
-
+	users[userId] = {};
+  	users[userId].id = userId;
+  	users[userId].password = password;
+  	users[userId].email = email;
+  	res.redirect(`/register`);
   }
-    //urlDatabase[shortUrlKey] = newName;
-   
 
+  console.log(users);
 
-
-    res.redirect(`/register`);
+  
 });
 
 

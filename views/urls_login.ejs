@@ -7,33 +7,33 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <title>New URL - TinyApp Example</title>
+    <title>TinyURL</title>
   </head>
 
-<body>
-
-<header>
-    <% include ./partials/_header %>
-</header>
+<body style="width:100%">
 
 
 
-    <form class="form" action="/register" method="POST">
-      
+<h1 style="text-align:center; margin-top:20px; font-size: 80px">TinyUrl</h1>
 
-        <label for="email">Enter Email</label>
-        <input class="form-control" type="email" name="email" placeholder="enter email" style="width: 400px; margin: 1em">
+  <div style="text-align:center; width:200">
 
-        <label for="password">Enter Password</label>
-        <input class="form-control" type="password" name="password" placeholder="enter password" style="width: 400px; margin: 1em">
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <div style="width:300px; margin:50px auto">
 
-    
+      <form class="form" action="/register" method="POST">
 
-    </form>
+        <label for="email" style="margin-bottom:-10px"><p class="lead">Enter Email</p></label>
+        <input class="form-control" type="email" name="email" placeholder="enter email">
+        <label for="password" style="font-size:14px;margin-top:10px;margin-bottom:-10px"><p class="lead">Enter Password</p></label>
+        <input class="form-control" type="password" name="password" placeholder="enter password">
+        <button type="submit" class="btn btn-primary" style="margin-top:15px; width:100%">Submit</button>
 
+      </form>
 
-  
+    </div>
+
+  </div>
+
 </body>
 
 
