@@ -9,11 +9,21 @@ app.use(morgan('dev'));
 //sets the view engine
 app.set("view engine", "ejs");
 
+// const urlDatabase = {
+//   "b2xVn2": "http://www.lighthouselabs.ca",
+//   "9sm5xK": "http://www.google.com",
+// };
+
+
+// URL DATABASES
+// *******************************************************
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com",
+  b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
+  i3BoGr: { longURL: "https://www.google.ca", userID: "aJ48lW" },
 };
 
+// USER DATABASE
+// *******************************************************
 const users = { 
   "userRandomID": {
     id: "userRandomID", 
@@ -32,38 +42,43 @@ const users = {
   }
 };
 
-
+// VAR TEMPLATE 
+// *******************************************************
 const setTemplateVars = (userId) => {
-	let templateVars ={};
+
+  let templateVars ={};
+
   if (users[userId]) {
-  	console.log("here");
   	templateVars = {
   		urls: urlDatabase,
+  		longURL: urlDatabase.longURL,
    	 	email: users[userId].email,
-
+   	 	userId: users[userId].id,
     };
-  }else{ 
+  } else { 
   	templateVars = {
   	  urls: urlDatabase,
    	  email: null,
    	}
   };
- return templateVars;
+  return templateVars;
 };
 
-//sets cookie parser
+// COOKIE PARSER
+// *******************************************************
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
-//sets body parser
+// BODY PARSER
+// *******************************************************
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 
-
+// JSON
+// *******************************************************
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
@@ -109,7 +124,7 @@ app.post('/register', (req, res) => {
 });
 
 
-//THIS IS LOGIN PAGE
+// THIS IS LOGIN PAGE
 // *******************************************************
 app.get('/login', (req, res) => { 
   res.render("urls_login");
@@ -148,26 +163,76 @@ app.post('/login', (req, res) => {
 //INDEX PAGE 
 // *******************************************************
 app.get("/urls", (req, res) => {
+  
   const userId = req.cookies.user_id;
-  console.log(`this is userId: ${userId}`);
-  const templateVars = setTemplateVars (userId);
-  res.render("urls_index", templateVars);
-});
 
-//CREATE NEW TINY URL 
+  console.log(userId);
+
+  if (userId) {
+  	  const templateVars = setTemplateVars (userId);
+  	  res.render("urls_index", templateVars);
+  } else {
+   	  res.redirect("/login");
+   }
+});
+  
+//   //console.log(`this is userId: ${userId}`);
+//   const templateVars = setTemplateVars (userId);
+//   res.render("urls_index", templateVars);
+// });
+
+//CREATE NEW TINY URL LINK 
 // *******************************************************
 app.get("/urls/new", (req, res) => {
-  const email = users[userId].email;
   const templateVars = setTemplateVars (req.cookies.user_id);
   res.render("urls_new", templateVars);
+  console.log("I'm firing");
+});
+
+
+//EDIT LINK
+// *******************************************************
+
+app.post("/urls", (req, res) => {
+  const userId = req.cookies.user_id;
+  console.log("this is user id" + userId);
+
+  const longURL = req.body.longURL;
+  console.log("this is longURL " + longURL);
+
+  const shortURL = generateRandomString();
+  console.log("this is shortURL " + shortURL);
+
+  // urlDatabase[shortURL] = longURL;
+ 
+  urlDatabase[shortURL] = {};
+  urlDatabase[shortURL].longURL = longURL;
+  urlDatabase[shortURL].userID = userId;
+
+
+
+
+  console.log(urlDatabase); 
+  
+  res.redirect("/urls");     
 });
 
 //EDIT INDIVIDUAL LINK  
 // *******************************************************
 
 app.get("/urls/:shortURL", (req, res) => {
+  
+  console.log("EDIT FIRING");
+
   const shortUrlKey = req.params.shortURL;
-  const longUrlValue = urlDatabase[shortUrlKey];
+
+  console.log("shortUrlKey :" + shortUrlKey);
+
+
+  const longUrlValue = urlDatabase[shortUrlKey].longURL;
+
+  console.log("longURLValue :" + longUrlValue);
+
   const templateVars = {
   	shortURL: shortUrlKey,
   	longURL: longUrlValue,
@@ -180,43 +245,56 @@ app.get("/urls/:shortURL", (req, res) => {
  };
  
   const userId =req.cookies.user_id;
-  console.log("this is userId: " + userId);
+  //console.log("this is userId: " + userId);
 
   if (userId) {
     res.render("urls_show", templateVars);
   } else {
   	res.render("urls_login", templateVars);
   }
-  console.log("firing");
+
+ console.log(urlDatabase);  
+
 });
 
 
 //EDIT URL 
 // *******************************************************
+// *******************************************************
+// *******************************************************
+// *******************************************************
 
 app.get("/u/:shortURL", (req, res) => {
   const shortUrlKey = req.params.shortURL;
-  const longURL = urlDatabase[shortUrlKey];
+  console.log(`this is shortUrlKey NEW: ${shortUrlKey}`);
+  const longURL = urlDatabase[shortUrkKey].longURL; //**************************
+ 
   res.redirect(longURL);
+
 });
 
 
-app.post("/urls", (req, res) => {
-  const longURL = req.body.longURL;
-  const shortURL = generateRandomString();
-  urlDatabase[shortURL] = longURL;
-  res.redirect("/urls");       
+// EDIT ENTRIES
+// *******************************************************
+
+
+app.post('/urls/:shortURL', (req, res) => {
+    
+    const shortUrlKey = req.params.shortURL;
+    console.log(`****************`);
+    console.log(`this is shortUrlKey: ${shortUrlKey}`);
+    console.log(`****************`);
+    const newName = req.body.newname;
+    console.log(`this is newname: ${newName}`);
+    console.log(`****************`);
+    // if (newName) {
+    urlDatabase[shortUrlKey].longURL = newName;
+    // }
+    //urlDatabase[shortUrlKey] = newName;
+    res.redirect(`/urls/${shortUrlKey}`);
+  
 });
 
-//ADD USER NAME
-// app.post('/login', (req, res) => {
-//   const username = req.body.username;
-//   // console.log(`this is userName ${username}`);
-//   res.cookie("username", username);
-//   // console.log(`this is userCookie ${userCookie}`);
-//   // console.log(`this is userCookie ${userCookie}`);
-//   res.redirect("/urls"); 
-// });
 
 
 // LOGS OUT USER
@@ -224,26 +302,10 @@ app.post("/urls", (req, res) => {
 app.post('/logout', (req, res) => {
   console.log('Im firing');
   res.clearCookie("user_id");
-  res.redirect("/urls"); 
+  res.redirect("/login"); 
 });
 
 
-// EDIT ENTRIES
-// *******************************************************
-app.post('/urls/:shortURL', (req, res) => {
-    
-    const shortUrlKey = req.params.shortURL;
-    //console.log(`this is short url key: ${shortUrlKey}`);
-    const newName = req.body.newname;
-    console.log(`this is body.newname ` + req.body.newname);
-    console.log(`this is newname: ${newName}`);
-    // if (newName) {
-        urlDatabase[shortUrlKey] = newName;
-    // }
-    //urlDatabase[shortUrlKey] = newName;
-    res.redirect(`/urls/${shortUrlKey}`);
-     console.log("EDIT FIRING");
-});
 
 // DELETES TINYURL ENTRY FROM DATABASE
 // *******************************************************
@@ -265,4 +327,17 @@ let generateRandomString = () => {
   }
   return result;
 };
+
+
+
+//ADD USER NAME
+// app.post('/login', (req, res) => {
+//   const username = req.body.username;
+//   // console.log(`this is userName ${username}`);
+//   res.cookie("username", username);
+//   // console.log(`this is userCookie ${userCookie}`);
+//   // console.log(`this is userCookie ${userCookie}`);
+//   res.redirect("/urls"); 
+// });
+
 
