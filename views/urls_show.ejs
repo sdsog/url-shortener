@@ -13,24 +13,26 @@
   <header>
     <% include ./partials/_header %>
   </header>
+  <p style="margin:12px; font-size:16px"><a href='/urls/'>
+      Home</a> / Edit Links</p>
   <div class="table-responsive">
     <table class="table">
       <tr>
-        <th>TinyURL</th>
-        <th>Website</th>
-        <th>Edit Your Link</th>
+        <th style="border:none">TinyURL</th>
+        <th style="border:none">Website</th>
+        <th style="border:none">Edit Your Link</th>
       </tr>
       <tr>
-        <td><a href="<%= longURL %>">
+        <td style="border:none"><a href="<%= longURL %>">
             <%= shortURL %></a></td>
-        <td>
+        <td style="border:none">
           <%= longURL %>
         </td>
         <!--    Form to edit links -->
-        <td>
+        <td style="border:none">
           <form class="form-inline" action="/urls/<%= shortURL %>" method="POST">
             <div class="form-group mb-2">
-              <input class="form-control" type="text" name="newname" placeholder="" style="width: 200px; margin-right: 1em">
+              <input class="form-control" type="text" name="newname" placeholder="https://" style="width: 400px; margin-right: 1em">
               <button type="submit" class="btn btn-primary">EDIT</button>
             </div>
         </td>

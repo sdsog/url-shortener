@@ -13,10 +13,12 @@
   <header>
     <% include ./partials/_header %>
   </header>
-  <h3>Create TinyURL</h3>
+  <h3 style="margin-left: 12px">Create TinyURL</h3>
+  <p style="margin:13px; font-size:16px"><a href='/urls/'>
+      Home</a> / Create New TinyURL</p>
   <form class="form-inline" action="/urls" method="POST">
     <div class="form-group mb-2">
-      <label for="longURL">Enter a URL:</label>
+      <label for="longURL" style="margin-left: 12px">Enter a URL:</label>
       <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 400px; margin: 1em">
       <button type="submit" class="btn btn-primary">Make My TinyURL!</button>
     </div>
