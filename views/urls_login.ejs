@@ -1,46 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-    <title>TinyURL</title>
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <title>TinyURL</title>
+</head>
 
 <body style="width:100%">
-
-
-
-<h1 style="text-align:center; margin-top:20px; font-size: 80px">TinyAPP</h1>
-
-<p class="lead" style="text-align:center"><a href="/login">Login</a> | <a href="/login">Register</a></p>
-
+  <h1 style="text-align:center; margin-top:20px; font-size: 80px">TinyAPP</h1>
+  <p class="lead" style="text-align:center"><a href="/login">Login</a> | <a href="/register">Register</a></p>
   <div style="text-align:center; width:200">
-
     <div style="width:300px; margin:50px auto;">
-
       <form class="form" action="/login" method="POST">
-
-        <label for="email" style="margin-top:50px;margin-bottom:-15px;"><p class="lead" style="font-size:18px">Enter Your Email</p></label>
-
+        <label for="email" style="margin-top:50px;margin-bottom:-15px;">
+          <p class="lead" style="font-size:18px">Enter Your Email</p>
+        </label>
         <input style="text-align:center" class="form-control" type="email" name="email" placeholder="email">
-
-        <label for="password" style="margin-top:20px;margin-bottom:-15px"><p class="lead" style="font-size:18px">Enter Your Password</p></label>
-
+        <label for="password" style="margin-top:20px;margin-bottom:-15px">
+          <p class="lead" style="font-size:18px">Enter Your Password</p>
+        </label>
         <input style="text-align:center" class="form-control" type="password" name="password" placeholder="password">
-
         <button type="submit" class="btn btn-primary" style="margin-top:10px; width:100%">Submit</button>
-
       </form>
-
     </div>
-
   </div>
-
 </body>
-
 
 </html>

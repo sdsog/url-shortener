@@ -1,54 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <title>TinyApp</title>
 </head>
-
-
-
-
-
 <header>
-    <% include ./partials/_header %>
+  <% include ./partials/_header %>
 </header>
 
 <body>
-
-
-<p class="lead" style="margin:12px"><a href ='/urls/new' >Create New TinyUrl</a></p>
-
-<div class="table-responsive">
-	<table class="table table-bordered">
-
- <tr>
-    <th style="border:none"><h5>Your Website</h5></th>
-    <th style="border:none"><h5>TinyURL</h5></th>
-  </tr>
-
-<% for(let key in urls) { %>
-<tr>
-
-    <td style="border:none"><%= urls[key].longURL %></td>
-    <td style="border:none"><a href="<%= urls[key] %>" target="_blank" class="lead"><%= key %></a></td>
-    <td style="border:none"><a href="<%= key %>">EDIT</a></td>
-    <td style="border:none"><form method="POST" action="/urls/<%= key %>/delete">
-    	<button type="submit" class="btn btn-primary">DELETE</button>
-    </form>
-    </td>
-<% } %>
-</tr>
-
- </table>
-
-</div>
-
-
+  <p class="lead" style="margin:12px"><a href='/urls/new'>Create a New TinyURL</a></p>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <tr>
+        <th style="border:none">
+          <h5>Your Website</h5>
+        </th>
+        <th style="border:none">
+          <h5>TinyURL</h5>
+        </th>
+      </tr>
+      <% for(let key in userURL) { %>
+      <tr>
+        <td style="border:none">
+          <%= userURL[key].longURL %>
+        </td>
+        <td style="border:none"><a href="<%= userURL[key].longURL %>" target="_blank" class="lead">
+            http://
+            <%= userURL[key].shortURL %>.ta</a></td>
+        <td style="border:none"><a href="/urls/<%= userURL[key].shortURL %>">EDIT</a></td>
+        <td style="border:none">
+          <form method="POST" action="/urls/<%= userURL[key].shortURL %>/delete">
+            <button type="submit" class="btn btn-primary">DELETE</button>
+          </form>
+        </td>
+        <% } %>
+      </tr>
+    </table>
+  </div>
 </body>
-
 
 </html>

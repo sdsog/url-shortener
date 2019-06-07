@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
   <title>TinyApp</title>
-
 </head>
-
-
 <!-- <form class="form-inline">
   <div class="form-group">
     
@@ -21,46 +17,26 @@
 </form>
  -->
 
-
-
 <body style="font-size:20px; padding:30px;">
-
-	<div class="row">
-
-		<div class="col-md-6">
-  
-			<h1 style="margin-left:10px;">TinyURL</h1>
-
-		</div>
-
-
-	<div class="col-md-6">
-
-		<% if(email){ %>
-
-			<p class="lead" style="margin-top:12px; font-size:16px">LOGGED IN <strong><%= email %></strong></p>
-
-			<form class="form-inline" action="/logout" method="POST" style="float:right; margin-right:165px; margin-top:-30px;">
-      		<div class="form-group mb-2">
-        	<button type="submit" class="btn btn-warning btn-sm">LOGOUT</button>
-        </form>
-    
+  <div class="row">
+    <div class="col-md-6">
+      <h1 style="margin-left:10px;">TinyAPP</h1>
     </div>
-
-
-	<% } else{ %>  
-
-	<p class="lead" style="text-align:right"><a href="/login">login here</a></p>
-
-      </div>
-
-<% } %>
-
-</div>
-
-</div>
+    <div class="col-md-6">
+      <% if(email){ %>
+      <p class="lead" style="margin-top:12px; font-size:16px">LOGGED IN <strong>
+          <%= email %></strong></p>
+      <form class="form-inline" action="/logout" method="POST" style="float:right; margin-right:165px; margin-top:-30px;">
+        <div class="form-group mb-2">
+          <button type="submit" class="btn btn-warning btn-sm">LOGOUT</button>
+      </form>
+    </div>
+    <% } else{ %>
+    <p class="lead" style="text-align:right"><a href="/login">login here</a></p>
+  </div>
+  <% } %>
+  </div>
+  </div>
 </body>
-
-
 
 </html>
