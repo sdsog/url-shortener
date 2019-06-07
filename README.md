@@ -8,6 +8,5 @@ Url shortener to demonstrate:
 2. Various npm packages
 3. Server + B.R.E.A.D.
 4. Login and regisation flows
-5. How to use cookies
+5. How to use and encrypt cookies
 6. How to securely set secure passwords via hashing
-7. How to encrypt cookies
