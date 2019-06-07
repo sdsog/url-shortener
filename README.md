@@ -1,7 +1,7 @@
 # url-shortener aka TinyAPP
 url shortener project for lighthouse labs - week2.day2
 
-# Project for lighthouse labs 
+# Project for lighthouse labs coding bootcamp 
 
 Url shortener to demonstrate:
 1. Server setup through express
