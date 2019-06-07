@@ -30,8 +30,7 @@
           <%= userURL[key].longURL %>
         </td>
         <td style="border:none"><a href="<%= userURL[key].longURL %>" target="_blank" class="lead">
-            http://
-            <%= userURL[key].shortURL %>.ta</a></td>
+            <%= userURL[key].shortURL %></a></td>
         <td style="border:none"><a href="/urls/<%= userURL[key].shortURL %>">EDIT</a></td>
         <td style="border:none">
           <form method="POST" action="/urls/<%= userURL[key].shortURL %>/delete">
