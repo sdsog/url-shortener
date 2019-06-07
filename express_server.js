@@ -94,7 +94,6 @@ let urlsForUser = (id) => {
     if (urlDatabase[key].userID === id) {
       const _URLS = {};
       _URLS.shortURL = key;
-      console.log("this is id ", id);
       _URLS.longURL = urlDatabase[key].longURL;
       _URLS.userID = urlDatabase[key].userID;
       userURLS.push(_URLS);
@@ -139,7 +138,6 @@ app.post('/register', (req, res) => {
 
   for (let key in users) {
     if (users[key].email === email) {
-      console.log("matches");
       res.sendStatus(400);
     }
   }
@@ -173,7 +171,6 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   const email = req.body.email;
-  console.log(email);
   const password = req.body.password;
   let pwChecker = false;
   let id;
@@ -202,7 +199,6 @@ app.get("/urls", (req, res) => {
   const userId = req.session.user_id;
   if (userId) {
     let templateVars = setTemplateVars(userId);
-    console.log(templateVars);
     res.render("urls_index", templateVars);
   } else {
     res.redirect("/login");
@@ -265,7 +261,9 @@ app.get("/urls/:shortURL", (req, res) => {
 
 app.get("/u/:shortURL", (req, res) => {
   const shortUrlKey = req.params.shortURL;
+  console.log(urlDatabase, shortUrlKey);
   const longURL = urlDatabase[shortUrlKey].longURL;
+  res.redirect(longURL);
 });
 
 
@@ -276,8 +274,17 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.post('/urls/:shortURL', (req, res) => {
   const shortUrlKey = req.params.shortURL;
+
+  console.log("this is short url key, ", shortUrlKey);
+
   const newName = req.body.newname;
+
+  console.log("this is new name, ", newName)
+
   urlDatabase[shortUrlKey].longURL = newName;
+
+  console.log(urlDatabase);
+
   res.redirect(`/urls/${shortUrlKey}`);
 
 });
@@ -288,7 +295,6 @@ app.post('/urls/:shortURL', (req, res) => {
 // ********************************************************************
 
 app.post('/logout', (req, res) => {
-  console.log('Im firing');
   res.clearCookie("user_id");
   res.clearCookie("user_id.sig");
   res.redirect("/login");
@@ -305,7 +311,6 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   const userId = req.session.user_id;
   if (userId) {
     const shortUrlKeyDelete = req.params.shortURL;
-    console.log("this is short url key: ", shortUrlKeyDelete);
     delete urlDatabase[shortUrlKeyDelete];
     res.redirect("/urls");
   } else {

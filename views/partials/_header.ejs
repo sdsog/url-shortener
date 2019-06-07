@@ -17,14 +17,14 @@
 </form>
  -->
 
-<body style="font-size:20px; padding:30px; width: 1200px">
+<body style="font-size:20px; padding:30px; width: 1000px">
   <div class="row">
     <div class="col-md-6">
       <h1 style="margin-left:10px;">TinyAPP</h1>
     </div>
     <div class="col-md-6">
       <% if(email){ %>
-      <p class="lead" style="font-size:16px; text-align:right; float:right; margin-left:auto">Logged in: <strong>
+      <p class="lead" style="font-size:16px; text-align:right; float:right; margin-left:auto margin-right:20px">Logged in: <strong>
           <%= email %></strong></p>
     </div>
     <form action="/logout" method="POST" style="float:right; margin-right:10px; margin-left:auto; margin-top:-28px">
