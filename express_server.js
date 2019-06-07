@@ -131,26 +131,16 @@ app.post('/login', (req, res) => {
 	}
   } 
 
+  //Checks password credentials
   for (let key in users) {
     if (users[key].email === email && users[key].password === password) {
         res.redirect("/urls");
-	// } else {
-	// 	res.sendStatus(400);
-	// 	res.redirect("/login");
-	// }
+    }
   }
-}
 
 
+  //Failed login
   res.sendStatus(400);
-
- // for (let key in users) {
-	// // if (users[key].email === email && users[key].password === password ) {
-	// res.redirect("/urls");
-	// } else {
-	// 	res.sendStatus(400);
-	// }  
- //  }
 
 });
 
@@ -172,6 +162,9 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new", templateVars);
 });
 
+//EDIT INDIVIDUAL LINK  
+// *******************************************************
+
 app.get("/urls/:shortURL", (req, res) => {
   const shortUrlKey = req.params.shortURL;
   const longUrlValue = urlDatabase[shortUrlKey];
@@ -179,10 +172,27 @@ app.get("/urls/:shortURL", (req, res) => {
   	shortURL: shortUrlKey,
   	longURL: longUrlValue,
   	user_id: req.cookies["user_id"],
+ 
+//			MUST CHANGE!!!! ONLY FOR TESTING!!!!!
+// ******************************************************* 
+  	email: "test",
+// ******************************************************* 
  };
-  res.render("urls_show", templateVars);
+ 
+  const userId =req.cookies.user_id;
+  console.log("this is userId: " + userId);
+
+  if (userId) {
+    res.render("urls_show", templateVars);
+  } else {
+  	res.render("urls_login", templateVars);
+  }
+  console.log("firing");
 });
 
+
+//EDIT URL 
+// *******************************************************
 
 app.get("/u/:shortURL", (req, res) => {
   const shortUrlKey = req.params.shortURL;
@@ -221,6 +231,7 @@ app.post('/logout', (req, res) => {
 // EDIT ENTRIES
 // *******************************************************
 app.post('/urls/:shortURL', (req, res) => {
+    
     const shortUrlKey = req.params.shortURL;
     //console.log(`this is short url key: ${shortUrlKey}`);
     const newName = req.body.newname;
@@ -231,6 +242,7 @@ app.post('/urls/:shortURL', (req, res) => {
     // }
     //urlDatabase[shortUrlKey] = newName;
     res.redirect(`/urls/${shortUrlKey}`);
+     console.log("EDIT FIRING");
 });
 
 // DELETES TINYURL ENTRY FROM DATABASE
