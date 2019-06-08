@@ -261,7 +261,6 @@ app.get("/urls/:shortURL", (req, res) => {
 
 app.get("/u/:shortURL", (req, res) => {
   const shortUrlKey = req.params.shortURL;
-  console.log(urlDatabase, shortUrlKey);
   const longURL = urlDatabase[shortUrlKey].longURL;
   res.redirect(longURL);
 });
@@ -274,19 +273,9 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.post('/urls/:shortURL', (req, res) => {
   const shortUrlKey = req.params.shortURL;
-
-  console.log("this is short url key, ", shortUrlKey);
-
   const newName = req.body.newname;
-
-  console.log("this is new name, ", newName)
-
   urlDatabase[shortUrlKey].longURL = newName;
-
-  console.log(urlDatabase);
-
   res.redirect(`/urls/${shortUrlKey}`);
-
 });
 
 
@@ -307,7 +296,6 @@ app.post('/logout', (req, res) => {
 // ********************************************************************
 
 app.post("/urls/:shortURL/delete", (req, res) => {
-
   const userId = req.session.user_id;
   if (userId) {
     const shortUrlKeyDelete = req.params.shortURL;
@@ -316,5 +304,4 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   } else {
     res.redirect("/login");
   }
-
 });
