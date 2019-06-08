@@ -4,8 +4,8 @@ urls (a la bit.ly)
 
 ## Final Product
 
-![screenshot1](/screenshot1.png?raw=true "Optional Title")
-![screenshot2](/screenshot2.png?raw=true "Optional Title")
+![screenshot1](/register-page.png?raw=true "Optional Title")
+![screenshot2](/url-index.png?raw=true "Optional Title")
 
 ## Dependencies 
 
