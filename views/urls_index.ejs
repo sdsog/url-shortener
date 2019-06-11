@@ -27,10 +27,10 @@
       <% for(let key in userURL) { %>
       <tr>
         <td style="border:none">
-          <%= userURL[key].longURL %>
+            <a href="<%= userURL[key].longURL %>" target="_blank" class="lead"><%= userURL[key].longURL %></a>
         </td>
-        <td style="border:none"><a href="<%= userURL[key].longURL %>" target="_blank" class="lead">
-            <%= userURL[key].shortURL %></a></td>
+        <td style="border:none"><p class="lead">
+            <%= userURL[key].shortURL %></p></td>
         <td style="border:none"><a href="/urls/<%= userURL[key].shortURL %>">EDIT</a></td>
         <td style="border:none">
           <form method="POST" action="/urls/<%= userURL[key].shortURL %>/delete">

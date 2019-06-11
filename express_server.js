@@ -49,9 +49,6 @@ app.use(cookieSession({
 // *******************************************************
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
-});
 
 // JSON
 // *******************************************************
@@ -71,8 +68,6 @@ const setTemplateVars = (userId) => {
   let templateVars = {};
   if (users[userId]) {
     templateVars = {
-      //urls: urlDatabase,
-      //longURL: urlDatabase.longURL,
       email: users[userId].email,
       userId: users[userId].id,
       userURL: urlsForUser(userId),
@@ -145,10 +140,8 @@ app.post('/register', (req, res) => {
   //Checks for empty fields and returns error message
   if (!email) {
     res.sendStatus(400);
-    console.log("empty email");
   } else if (!password) {
     res.sendStatus(400);
-    console.log("empty password");
     //Creates new entry in user database object
   } else {
     users[userId] = {};
@@ -186,7 +179,7 @@ app.post('/login', (req, res) => {
     req.session.user_id = id;
     res.redirect("/urls");
   } else {
-    res.sendStatus(400);
+    res.sendStatus(400, { error: "some elaborate error message" });
   }
 });
 
@@ -304,4 +297,16 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   } else {
     res.redirect("/login");
   }
+});
+
+// REDIRECTS ALL REQUESTS TO INDEX
+// ********************************************************************
+// ********************************************************************
+
+app.get("*", (req, res) => {
+  res.redirect("/urls");
+});
+
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}!`);
 });
