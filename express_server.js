@@ -83,7 +83,7 @@ const setTemplateVars = (userId) => {
 
 // cb for populating "/index" with URLs that user has created
 // ********************************************************************
-let urlsForUser = (id) => {
+const urlsForUser = (id) => {
   const userURLS = [];
   for (let key in urlDatabase) {
     if (urlDatabase[key].userID === id) {
@@ -99,7 +99,7 @@ let urlsForUser = (id) => {
 
 // Generates random string for userID + TinyURL
 // ********************************************************************
-let generateRandomString = () => {
+const generateRandomString = () => {
   let result = '';
   let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let length = characters.length;
@@ -139,9 +139,9 @@ app.post('/register', (req, res) => {
 
   //Checks for empty fields and returns error message
   if (!email) {
-    res.sendStatus(400);
+    res.status(400).send("Must enter email.");
   } else if (!password) {
-    res.sendStatus(400);
+    res.status(400).send("Password empty.");
     //Creates new entry in user database object
   } else {
     users[userId] = {};
@@ -179,7 +179,8 @@ app.post('/login', (req, res) => {
     req.session.user_id = id;
     res.redirect("/urls");
   } else {
-    res.sendStatus(400, { error: "some elaborate error message" });
+    //res.sendStatus(400, { error: "some elaborate error message" });
+    res.status(400).send("Login failed. Please try again.");
   }
 });
 
