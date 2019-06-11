@@ -64,7 +64,7 @@ app.get("/urls.json", (req, res) => {
 
 // calls user data based off user_id cookie to populate user variables 
 // ********************************************************************
-const setTemplateVars = (userId) => {
+const retrieveUserData = (userId) => {
   let templateVars = {};
   if (users[userId]) {
     templateVars = {
@@ -115,7 +115,7 @@ const generateRandomString = () => {
 // ********************************************************************
 
 app.get('/register', (req, res) => {
-  const templateVars = setTemplateVars(req.session.user_id);
+  const templateVars = retrieveUserData(req.session.user_id);
   res.render("urls_register", templateVars);
 });
 
@@ -124,7 +124,6 @@ app.get('/register', (req, res) => {
 
 
 app.post('/register', (req, res) => {
-  //Form inputs 
   const email = req.body.email;
   const password = req.body.password;
   const hashedPassword = bcrypt.hashSync(password, 10);
@@ -133,7 +132,7 @@ app.post('/register', (req, res) => {
 
   for (let key in users) {
     if (users[key].email === email) {
-      res.sendStatus(400);
+      res.status(400).send("Email already exists.");
     }
   }
 
@@ -192,7 +191,7 @@ app.post('/login', (req, res) => {
 app.get("/urls", (req, res) => {
   const userId = req.session.user_id;
   if (userId) {
-    let templateVars = setTemplateVars(userId);
+    let templateVars = retrieveUserData(userId);
     res.render("urls_index", templateVars);
   } else {
     res.redirect("/login");
@@ -205,7 +204,7 @@ app.get("/urls", (req, res) => {
 // ********************************************************************
 
 app.get("/urls/new", (req, res) => {
-  const templateVars = setTemplateVars(req.session.user_id);
+  const templateVars = retrieveUserData(req.session.user_id);
   res.render("urls_new", templateVars);
 });
 
@@ -244,7 +243,6 @@ app.get("/urls/:shortURL", (req, res) => {
   } else {
     res.render("urls_login", templateVars);
   }
-
 });
 
 
